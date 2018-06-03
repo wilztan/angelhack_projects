@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facility Management</title>
+    <!-- BOOTSTRAP STYLES-->
+    <link href="public/tp/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="public/tp/css/font-awesome.css" rel="stylesheet" />
+    <!-- CUSTOM STYLES-->
+    <link href="public/tp/css/custom.css" rel="stylesheet" />
+    <!-- GOOGLE FONTS-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+<body>
+    <div id="wrapper">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="adjust-nav">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><i class="fa fa-square-o "></i>&nbsp;Facility</a>
+                </div>
+
+            </div>
+        </div>
+        <!-- /. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li class="text-center user-image-back">
+
+                    </li>
+
+
+                    <li>
+                        <a href="index.html"><i class="fa fa-desktop "></i>Dashboard</a>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-table "></i>Crowd Control</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-edit "></i>Toilet Control</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-qrcode "></i>AC</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i>Vending Machine</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Master</h2>
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+                <hr />
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-6">
+                        <h5>Facility Notification</h5>
+                        <div class="panel panel-primary text-center no-boder bg-color-blue">
+                            <div class="panel-body">
+                                <!-- <i class="fa fa-bar-chart-o fa-5x"></i> -->
+                                <h3>Toilet Room 1</h3>
+                            </div>
+                            <div class="panel-footer back-footer-blue">
+                                Need Fix in 3 Days
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-6">
+                        <h5>Cleaning</h5>
+                        <div class="alert alert-info text-center">
+
+                            <h3>Room 1 </h3>
+                            Clean at 8.00
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Crowd Control</h5>
+
+                        <button id="maleOn" class="btn btn-primary">Male On</button>
+                        <button id="maleOff" class="btn btn-danger">Male Off</button>
+
+                        <br><br>
+
+                        <button id="femaleOn" class="btn btn-primary">Female On</button>
+                        <button id="femaleOff" class="btn btn-danger">Female Off</button>
+
+                        <br><br>
+
+                        <button id="disabledOn" class="btn btn-primary" style="">disabled On</button>
+                        <button id="disabledOff" class="btn btn-danger" style="">disabled Off</button>
+
+                        <br><br>
+
+                        <button id="arrowOn" class="btn btn-primary" style="">arrow On</button>
+                        <button id="arrowOff" class="btn btn-danger" style="">arrow Off</button>
+
+                        <br><br>
+
+                        <button id="fullOn" class="btn btn-primary" style="">Full On</button>
+                        <button id="fullOff" class="btn btn-danger" style="">Full Off</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="public/tp/js/jquery-1.10.2.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="public/tp/js/bootstrap.min.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="public/tp/js/jquery.metisMenu.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script src="public/tp/js/custom.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+
+        $('form').submit(function(){
+          socket.emit('chat message', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+
+        $('#maleOn').click(function () {
+            socket.emit('chat message','male_on');
+        })
+        $('#femaleOn').click(function () {
+            socket.emit('chat message','female_on');
+        })
+        $('#maleOff').click(function () {
+            socket.emit('chat message','male_off');
+        })
+        $('#femaleOff').click(function () {
+            socket.emit('chat message','female_off');
+        })
+        $('#arrowOn').click(function () {
+            socket.emit('chat message','arrow_on');
+        })
+        $('#arrowOff').click(function () {
+            socket.emit('chat message','arrow_off');
+        })
+        $('#disabledOff').click(function () {
+            socket.emit('chat message','disabled_off');
+        })
+        $('#disabledOn').click(function () {
+            socket.emit('chat message','disabled_on');
+        })
+        $('#fullOn').click(function () {
+            socket.emit('chat message','full_off');
+        })
+        $('#fullOff').click(function () {
+            socket.emit('chat message','full_on');
+        })
+      });
+    </script>
+
+
+</body>
+</html>

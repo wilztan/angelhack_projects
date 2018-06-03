@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Room Availability</title>
+    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="public/css/materialize.min.css">
+    <style media="screen">
+      .onBooked{
+        opacity:0.4;
+        animation-duration: 3s;
+        -webkit- animation-duration: 3s;
+      }
+      .hidez{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h3 style="text-align:center">Room Availability</h3>
+    <div class="row">
+      <div class="col s4 m4">
+        <div class="card"  style="opacity:0.4;">
+          <div class="card-image">
+            <img src="public/img/toilet.jpg" style="overflow:hidden;height:300px;background:black">
+            <span class="card-title">Room 01</span>
+          </div>
+          <div class="card-content">
+            <p>Used</p>
+          </div>
+          <div class="card-action">
+          </div>
+        </div>
+      </div>
+
+      <div class="col s4 m4">
+        <div class="card"  style="opacity:0.4;">
+          <div class="card-image">
+            <img src="public/img/toilet.jpg" style="overflow:hidden;height:300px;background:black">
+            <span class="card-title">Room 02</span>
+          </div>
+          <div class="card-content">
+            <p>Used</p>
+          </div>
+          <div class="card-action">
+          </div>
+        </div>
+      </div>
+
+      <div class="col s4 m4">
+        <div class="card"  style="" id="cardz">
+          <div class="card-image">
+            <img src="public/img/toilet.jpg" style="overflow:hidden;height:300px;background:black">
+            <span class="card-title">Room 03</span>
+          </div>
+          <div class="card-content">
+            <p><span style="color:white">X</span> <span id="use" class="hidez">Used</span></p>
+          </div>
+          <div class="card-action">
+            <!-- <a href="#">This is a link</a> -->
+          </div>
+        </div>
+      </div>
+  </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+
+        $('form').submit(function(){
+          socket.emit('chat message', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+
+        socket.on('chat message', function(msg){
+          if(msg==='Input Received'){
+            $('#cardz').toggleClass('onBooked');
+            $('#use').toggleClass('hidez');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

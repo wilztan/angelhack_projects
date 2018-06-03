@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Sign</title>
+    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="public/css/materialize.min.css">
+  </head>
+  <body style="">
+    <nav class="white ">
+       <div class="nav-wrapper">
+         <a href="#" class="brand-logo">MSys</a>
+         <ul id="nav-mobile" class="right hide-on-med-and-down">
+           <li><a href="sass.html">Sass</a></li>
+           <li><a href="badges.html">Components</a></li>
+           <li><a href="collapsible.html">JavaScript</a></li>
+         </ul>
+       </div>
+     </nav>
+    <div class="container">
+      <div class="row sign-table-row">
+        <div class="col s3 sign">
+          <img src="public/img/maleToilet.png" alt=""  id="male">
+        </div>
+        <div class="col s3 sign">
+          <img src="public/img/femaleToilet.png" alt=""  id="female">
+        </div>
+        <div class="col s3 sign">
+          <img src="public/img/disabledToilet.png" alt=""  id="disabled">
+        </div>
+        <div class="col s3 sign">
+          <img src="public/img/arrow.png" alt=""  id="arrow">
+        </div>
+      </div>
+
+      <div class="row" id="full" style="text-align:center;color:#D32F2F">
+        <h1>TOILET FULL</h1>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var male = $('#male');
+      var female = $('#female');
+      var disablez = $('#disabled');
+      var arrow = $('#arrow');
+      var full = $('#full');
+      var body = $('html');
+
+      full.hide();
+      disablez.hide();
+      arrow.hide();
+      male.hide();
+      female.hide();
+
+
+      $(function () {
+        var socket = io();
+
+        $('form').submit(function(){
+          socket.emit('chat message', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+
+        socket.on('chat message', function(msg){
+          if(msg === 'full_on'){
+            full.hide();
+          }
+          if(msg === 'full_off'){
+            full.show();
+          }
+          if(msg === 'male_off'){
+            male.hide();
+          }
+          if(msg === 'male_on'){
+            male.show();
+          }
+          if(msg === 'female_off'){
+            female.hide();
+          }
+          if(msg === 'female_on'){
+            female.show();
+          }
+          if(msg === 'disabled_off'){
+            disablez.hide();
+          }
+          if(msg === 'disabled_on'){
+            disablez.show();
+          }
+          if(msg === 'arrow_on'){
+            arrow.show();
+          }
+          if(msg === 'arrow_off'){
+            arrow.hide();
+          }
+        });
+
+        body.click(function(){
+          socket.emit('chat message',"Input Received");
+            socket.emit('chat message',"full_on");
+        });
+      });
+    </script>
+  </body>
+</html>
