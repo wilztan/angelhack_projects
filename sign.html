@@ -18,7 +18,14 @@
        </div>
      </nav>
     <div class="container">
+
+
+
       <div class="row sign-table-row">
+
+        <div class="col s3 sign">
+          <img src="public/img/disabledToilet.png" alt=""  id="disabled">
+        </div>
         <div class="col s3 sign">
           <img src="public/img/maleToilet.png" alt=""  id="male">
         </div>
@@ -26,11 +33,19 @@
           <img src="public/img/femaleToilet.png" alt=""  id="female">
         </div>
         <div class="col s3 sign">
-          <img src="public/img/disabledToilet.png" alt=""  id="disabled">
-        </div>
-        <div class="col s3 sign">
           <img src="public/img/arrow.png" alt=""  id="arrow">
         </div>
+      </div>
+
+
+
+      <div class="row  sign-table-row">
+        <div class="col s3"></div>
+        <div class="col s3"></div>
+        <div class="col s3 sign">
+          <img src="public/img/arrowGreen.png" alt=""  id="arrow1" style="transform: rotate(180deg);"/>
+        </div>
+        <div class="col s3"></div>
       </div>
 
       <div class="row" id="full" style="text-align:center;color:#D32F2F">
@@ -45,28 +60,36 @@
       var female = $('#female');
       var disablez = $('#disabled');
       var arrow = $('#arrow');
+      var arrow1 = $('#arrow1');
       var full = $('#full');
       var body = $('html');
 
       full.hide();
-      disablez.hide();
-      arrow.hide();
-      male.hide();
-      female.hide();
+      // disablez.hide();
+      // arrow.hide();
+      // male.hide();
+      // female.hide();
+      arrow1.hide();
+
+      var i = 0;
 
 
       $(function () {
         var socket = io();
 
-        $('form').submit(function(){
-          socket.emit('chat message', $('#m').val());
-          $('#m').val('');
-          return false;
-        });
-
         socket.on('chat message', function(msg){
           if(msg === 'full_on'){
             full.hide();
+          }
+          if(msg ==='arrow1_on'){
+            i = 1;
+            female.toggleClass('female-block');
+            arrow1.show();
+          }
+          if(msg ==='arrow1_off'){
+            i=0;
+            female.toggleClass('female-block');
+            arrow1.hide();
           }
           if(msg === 'full_off'){
             full.show();
@@ -99,7 +122,12 @@
 
         body.click(function(){
           socket.emit('chat message',"Input Received");
-            socket.emit('chat message',"full_on");
+          socket.emit('chat message',"full_on");
+          if(i===0){
+            socket.emit('chat message','arrow1_on')
+          }else{
+            socket.emit('chat message','arrow1_off')
+          }
         });
       });
     </script>

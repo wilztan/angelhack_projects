@@ -60,7 +60,7 @@ io.on('connection',function(socket){
 });
 
 // ,'10.0.9.96'
-// ,'192.168.43.113'
-http.listen(3000,function(){
+
+http.listen(3000,'192.168.43.113',function(){
   console.log('Listening on 3000');
 })
